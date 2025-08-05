@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulação de Ataque DDoS</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #00ff00;
+      margin-bottom: 20px;
+    }
+
+    .btn-iniciar {
+      background-color: #00ff00;
+      color: #000;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 30px;
+      transition: 0.3s;
+    }
+
+    .btn-iniciar:hover {
+      background-color: #00cc00;
+    }
+
+    .terminal {
+      background-color: #000;
+      border: 2px solid #00ff00;
+      padding: 30px;
+      box-shadow: 0 0 20px #00ff00;
+      width: 90%;
+      max-width: 700px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      font-size: 16px;
+      display: none;
+    }
+
+    .flash {
+      animation: flash-bg 0.4s alternate 6;
+    }
+
+    @keyframes flash-bg {
+      0% { background-color: #000; }
+      100% { background-color: #002200; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Simulação de Ataque DDoS</h1>
+  <button class="btn-iniciar" onclick="iniciarSimulacao()">Iniciar Simulação</button>
+
+  <div class="terminal" id="terminal"></div>
+
+  <audio id="background-sound" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const bgSound = document.getElementById('background-sound');
+    const audioDigitar = new Audio("https://www.soundjay.com/typing/keyboard-1.mp3");
+    audioDigitar.volume = 0.3;
+
+    const linhas = [
+      "[Iniciando ataque DDoS falso]",
+      "📤 Enviando pacotes SYN para alvo...",
+      "🌊 Saturando www.alvofalso.com com tráfego simulado...",
+      "📈 Consumo de largura de banda aumentando...",
+      "📉 Latência simulada elevada (>900ms)",
+      "⚠️ Firewall detecta atividade suspeita (simulado)",
+      "✅ Ataque finalizado (sem danos reais)"
+    ];
+
+    function iniciarSimulacao() {
+      terminal.innerHTML = "";
+      terminal.classList.remove("flash");
+      terminal.style.display = 'block';
+      bgSound.volume = 0.2;
+      bgSound.play();
+
+      let i = 0;
+
+      function digitarLinhaTexto(texto, callback) {
+        let j = 0;
+        const intervalo = setInterval(() => {
+          if (j < texto.length) {
+            terminal.innerHTML += texto[j];
+            audioDigitar.play();
+            terminal.scrollTop = terminal.scrollHeight;
+            j++;
+          } else {
+            clearInterval(intervalo);
+            terminal.innerHTML += "\n";
+            callback();
+          }
+        }, 25);
+      }
+
+      function digitarProximaLinha() {
+        if (i < linhas.length) {
+          digitarLinhaTexto(linhas[i], () => {
+            if (linhas[i].includes("✅")) {
+              terminal.classList.add("flash");
+              new Audio("https://www.soundjay.com/button/beep-07.wav").play();
+            }
+            i++;
+            setTimeout(digitarProximaLinha, 400);
+          });
+        } else {
+          terminal.innerHTML += "\n<b style='color:#00ff00;'>[FIM DA SIMULAÇÃO]</b>";
+        }
+      }
+
+      digitarProximaLinha();
+    }
+  </script>
+
+</body>
+</html>

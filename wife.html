@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulação: Hackear Wi-Fi</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .btn-iniciar {
+      background-color: #00ff00;
+      color: #000;
+      border: none;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      padding: 10px 20px;
+      margin-bottom: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-iniciar:hover {
+      background-color: #00cc00;
+    }
+
+    .terminal {
+      border: 2px solid #00ff00;
+      box-shadow: 0 0 15px #00ff00;
+      background-color: #000;
+      padding: 20px;
+      width: 90%;
+      max-width: 700px;
+      font-size: 16px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      display: none;
+    }
+
+    @keyframes flash-bg {
+      0% { background-color: #000; }
+      100% { background-color: #002200; }
+    }
+
+    .flash {
+      animation: flash-bg 0.4s alternate 6;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Simulação de Hack Wi-Fi</h1>
+  <button class="btn-iniciar" onclick="executarSimulacao()">Iniciar Ataque</button>
+
+  <div class="terminal" id="terminal"></div>
+
+  <audio id="background-sound" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+    const bgSound = document.getElementById("background-sound");
+    const audioDigitar = new Audio("https://www.soundjay.com/typing/keyboard-1.mp3");
+    audioDigitar.volume = 0.3;
+
+    const linhas = [
+      "[Iniciando ataque Wi-Fi]",
+      "🔍 Escaneando redes...",
+      "📡 Rede detectada: Casa_Hack_5G",
+      "🔓 Tentando forçar WPS...",
+      "🔑 Senha encontrada: \"senha123hack\"",
+      "✅ Conectado com sucesso!"
+    ];
+
+    function executarSimulacao() {
+      terminal.innerHTML = "";
+      terminal.classList.remove("flash");
+      terminal.style.display = 'block';
+      bgSound.volume = 0.2;
+      bgSound.play();
+
+      let i = 0;
+
+      function digitarLinhaTexto(texto, callback) {
+        let j = 0;
+        const intervalo = setInterval(() => {
+          if (j < texto.length) {
+            terminal.innerHTML += texto[j];
+            audioDigitar.play();
+            terminal.scrollTop = terminal.scrollHeight;
+            j++;
+          } else {
+            clearInterval(intervalo);
+            terminal.innerHTML += "\n";
+            callback();
+          }
+        }, 25);
+      }
+
+      function digitarProximaLinha() {
+        if (i < linhas.length) {
+          digitarLinhaTexto(linhas[i], () => {
+            if (linhas[i].includes("✅")) {
+              terminal.classList.add("flash");
+              new Audio("https://www.soundjay.com/button/beep-07.wav").play();
+            }
+            i++;
+            setTimeout(digitarProximaLinha, 400);
+          });
+        } else {
+          terminal.innerHTML += "\n<b style='color:#00ff00;'>[FIM DA SIMULAÇÃO]</b>";
+        }
+      }
+
+      digitarProximaLinha();
+    }
+  </script>
+
+</body>
+</html>

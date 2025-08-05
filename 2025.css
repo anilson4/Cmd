@@ -1,0 +1,92 @@
+/* Estilo global */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #000;
+  color: #00ff00;
+  font-family: 'Courier New', Courier, monospace;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Container principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Botões */
+.botoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 5px;
+  padding: 10px;
+  background-color: #000;
+  border-bottom: 2px solid #00ff00;
+}
+
+.botao-hack {
+  background-color: #00ff00;
+  color: #000;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+  border-radius: 4px;
+}
+
+.botao-hack:hover {
+  background-color: #00cc00;
+}
+
+/* Terminal */
+#terminal {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  background-color: #000;
+  box-shadow: inset 0 0 15px #00ff00;
+  border-top: 2px solid #00ff00;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Efeito de flash no terminal */
+.flash {
+  animation: flash-bg 0.5s alternate 6;
+}
+
+@keyframes flash-bg {
+  0% { background-color: black; }
+  100% { background-color: #003300; }
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ff00;
+}
+
+/* Seleção de texto */
+::selection {
+  background: #00ff00;
+  color: #000;
+}
+a.botao-hack {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+}

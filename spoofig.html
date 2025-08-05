@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulação de IP Spoofing</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    h1 {
+      color: #00ff00;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .btn-iniciar {
+      background-color: #00ff00;
+      color: #000;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 30px;
+      transition: 0.3s;
+    }
+
+    .btn-iniciar:hover {
+      background-color: #00cc00;
+    }
+
+    .terminal {
+      background-color: #000;
+      border: 2px solid #00ff00;
+      box-shadow: 0 0 15px #00ff00;
+      padding: 20px;
+      width: 90%;
+      max-width: 700px;
+      font-size: 16px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      display: none;
+    }
+
+    .flash {
+      animation: flash-bg 0.4s alternate 6;
+    }
+
+    @keyframes flash-bg {
+      0% { background-color: #000; }
+      100% { background-color: #002200; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Simulação de IP Spoofing</h1>
+  <button class="btn-iniciar" onclick="iniciarSimulacao()">Iniciar Spoofing</button>
+
+  <div class="terminal" id="terminal"></div>
+
+  <audio id="background-sound" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const bgSound = document.getElementById('background-sound');
+    const audioDigitar = new Audio("https://www.soundjay.com/typing/keyboard-1.mp3");
+    audioDigitar.volume = 0.3;
+
+    const linhas = [
+      "[Iniciando spoofing de IP]",
+      "🔀 Forjando cabeçalhos...",
+      "📤 Enviando pacotes simulados...",
+      "🛡️ Proteções contornadas (fake)",
+      "✅ Spoofing simulado com sucesso!"
+    ];
+
+    function iniciarSimulacao() {
+      terminal.innerHTML = "";
+      terminal.classList.remove("flash");
+      terminal.style.display = 'block';
+      bgSound.volume = 0.2;
+      bgSound.play();
+
+      let i = 0;
+
+      function digitarLinhaTexto(texto, callback) {
+        let j = 0;
+        const intervalo = setInterval(() => {
+          if (j < texto.length) {
+            terminal.innerHTML += texto[j];
+            audioDigitar.play();
+            terminal.scrollTop = terminal.scrollHeight;
+            j++;
+          } else {
+            clearInterval(intervalo);
+            terminal.innerHTML += "\n";
+            callback();
+          }
+        }, 25);
+      }
+
+      function digitarProximaLinha() {
+        if (i < linhas.length) {
+          digitarLinhaTexto(linhas[i], () => {
+            if (linhas[i].includes("✅")) {
+              terminal.classList.add("flash");
+              new Audio("https://www.soundjay.com/button/beep-07.wav").play();
+            }
+            i++;
+            setTimeout(digitarProximaLinha, 400);
+          });
+        } else {
+          terminal.innerHTML += "\n<b style='color:#00ff00;'>[FIM DA SIMULAÇÃO]</b>";
+        }
+      }
+
+      digitarProximaLinha();
+    }
+  </script>
+
+</body>
+</html>
